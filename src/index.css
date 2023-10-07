@@ -1,0 +1,364 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap");
+@import url("https://rsms.me/inter/inter.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: "Inter var", sans-serif;
+  }
+}
+
+html,
+body,
+#root,
+#main {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+}
+
+body {
+  background: #f0f0f0;
+  font-family: 'Inter', sans-serif;
+}
+
+canvas {
+  touch-action: none;
+  transition: all;
+  transition-timing-function: ease-in;
+}
+
+/* INTRO */
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 40px;
+  align-items: center;
+  position: fixed;
+}
+
+header p {
+  font-weight: bold;
+  font-size: 0.8rem;
+  transition: all 1.2s ease-out;
+}
+
+header p.hidden {
+  opacity: 0;
+}
+
+section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.section--container {
+  margin-top: 5vh;
+  margin-left: 5vw;
+}
+
+.section--container.hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.section--container h1 {
+  font-weight: 900;
+  font-size: 20vh;
+  letter-spacing: -6px;
+  font-style: italic;
+  width: 30%;
+  line-height: 15vh;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.support--content {
+  position: relative;
+  top: -25%;
+  left: 300px;
+}
+
+.support--content p {
+  width: 350px;
+  margin-bottom: 48px;
+  line-height: 1.5rem;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -100;
+}
+
+button {
+  background-color: #dd5c18;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bolder;
+  pointer-events: all;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  box-shadow: inset 0 0 0 0.09px black;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 15px 30px;
+}
+
+button:hover {
+  box-shadow: inset 250px 0 0 0 black;
+  transform: scale(1.1);
+}
+
+/* PICKER */
+.color-options {
+  position: absolute;
+  flex-direction: column;
+  display: flex;
+  top: 55%;
+  gap: 10px;
+  bottom: 10px;
+  margin-bottom: 20px;
+  right: 20px;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid white;
+  transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+.circle:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* CUSTOMIZER */
+.customizer {
+  display: flex;
+  position: relative;
+  justify-content: flex-end;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+/* DECALS */
+.decals .decals--container {
+  @apply flex flex-row items-center justify-center mb-4 gap-3 glassmorphism;
+}
+
+.decals img:hover {
+  filter: none;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* MOBILE ADJUSTMENTS */
+@media screen and (max-width: 600px) {
+  .color-options {
+    margin-bottom: 30px;
+    top: 30%;
+  }
+}
+
+/* Styles for screens larger than or equal to 1024px wide */
+@media screen and (min-width: 1024px) {
+  .color-options {
+    margin-bottom: 50px;
+    top: 30%;
+    right: 40px;
+  }
+}
+
+/* Styles for screens between 768px and 1023px wide */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .color-options {
+    margin-bottom: 50px;
+    top: 30%;
+    right: 50px;
+  }
+
+  .editortabs-container {
+    left: 0.5rem;
+  }
+}
+
+/* Styles for screens smaller than 768px wide (e.g., mobile devices) */
+@media screen and (min-width: 601px) and (max-width: 767px) {
+  .color-options {
+    margin-bottom: 50px;
+    top: 30%;
+    right: 50px;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 10px; /* Adjust the distance from the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  pointer-events: none; /* Prevent the tooltip from interfering with clicks */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Show the tooltip on hover or focus */
+.decal:hover .tooltip,
+.decal:focus .tooltip {
+  opacity: 1;
+}
+
+.custom-zoom {
+  position: absolute;
+  display: block inline-flex;
+  margin-bottom: 110px;
+  left: 75%;
+  right: 10px;
+}
+
+/* @media screen and (min-width: 1024px) {
+  .custom-zoom {
+    margin-bottom: 50px;
+    top: 50%;
+    right: -40px;
+    margin-right: -40px;
+    rotate: calc(-90deg);
+  }
+} */
+
+.exit:hover {
+  box-shadow: inset -250px 0 0 0 black;
+}
+
+.cart {
+  @apply absolute top-2 mt-10 w-36 border-[2px] rounded-lg flex flex-row right-1 py-4 gap-4;
+}
+
+.exit {
+  @apply absolute top-2 mt-10 w-16 border-[2px] rounded-lg flex flex-col gap-4 py-4 left-1 md:ml-3 lg:-left-2;
+}
+
+.flip {
+  @apply absolute mb-80 w-16 border-[2px] rounded-lg flex flex-col py-4 gap-4 left-1 md:ml-3 lg:-left-2;
+}
+
+.app {
+  @apply relative w-full h-screen overflow-hidden;
+}
+
+.home {
+  @apply w-fit xl:h-full flex xl:justify-between justify-start items-start flex-col xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-7 absolute z-10;
+}
+
+.home-content {
+  @apply flex-1 xl:justify-center justify-start flex flex-col gap-10;
+}
+
+.home-content-para {
+  @apply text-[1.5rem] font-sans xl:justify-center justify-start flex flex-row gap-10;
+}
+
+.head-text {
+  @apply mt-32 xl:text-[10rem] text-[6rem] xl:leading-[11rem] leading-[7rem] font-black text-black;
+}
+
+.download-btn {
+  @apply w-14 h-14 flex justify-center items-center rounded-full glassmorphism cursor-pointer outline-none;
+}
+
+.editortabs-container {
+  @apply absolute w-16 border-[2px] bottom-48 rounded-lg flex flex-col justify-center items-center ml-1.5 py-4 gap-4;
+}
+
+.filtertabs-container {
+  @apply absolute z-10 bottom-5 right-0 left-0 w-full flex justify-center items-center flex-wrap gap-4;
+}
+
+.filepicker-container {
+  @apply absolute left-full ml-3 glassmorphism p-3 w-[195px] h-[220px] flex flex-col rounded-md;
+}
+
+.filepicker-label {
+  @apply border border-gray-300 py-1.5 px-2 rounded-md shadow-sm text-xs text-black focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer w-fit;
+}
+
+.tab-btn {
+  @apply w-14 h-14 flex justify-center items-center cursor-pointer select-none;
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+input[type="file"] {
+  z-index: -1;
+  position: absolute;
+  opacity: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .section--container {
+    margin-left: 15vw;
+  }
+
+  .section--container h1 {
+    font-size: 8rem;
+    letter-spacing: -6px;
+    line-height: 6rem;
+  }
+
+  .support--content {
+    top: 10%;
+    left: 0;
+  }
+}
